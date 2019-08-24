@@ -10,8 +10,12 @@
     "prettier": "prettier --write src/**/*.js"
   },
   "dependencies": {
+    "formik": "^1.5.8",
+    "prop-types": "^15.7.2",
     "react": "16.8.3",
-    "react-native": "0.59.10"
+    "react-native": "0.59.10",
+    "react-native-gesture-handler": "^1.4.1",
+    "react-native-vector-icons": "^6.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -36,5 +40,10 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
   }
 }
