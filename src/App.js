@@ -1,15 +1,12 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
 // import Login from './Screens/Login/login';
-import SignIn from './Screens/SignIn/signIn';
 import UserContext from './context/userContext';
+import Navigation from './navigation';
 
 const App = () => {
   return (
     <UserContext>
-      <SafeAreaView style={{ flex: 1 }}>
-        <SignIn />
-      </SafeAreaView>
+      <Navigation />
     </UserContext>
   );
 };

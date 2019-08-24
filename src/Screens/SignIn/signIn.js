@@ -4,6 +4,7 @@ import Textbox from '../../Components/Textbox/textbox';
 import Checkbox from '../../Components/Checkbox/checkbox';
 import Radio from '../../Components/Radio/radio';
 import Form from '../../Components/Form/form';
+import Button from '../../Components/Button/button';
 
 const validate = values => {
   const errors = {};
@@ -66,13 +67,25 @@ export default class signIn extends Component {
     setTimeout(() => {
       actions.setSubmitting(false);
       actions.setErrors({ general: 'Oops! something went wrong' });
+      const { navigation } = this.props;
+      navigation.navigate('App');
     }, 3000);
   };
 
   render() {
+    const {
+      navigation: {
+        state: { params },
+        getParam,
+        goBack,
+      },
+    } = this.props;
+    console.warn(params);
+    console.warn(getParam('greet', 'Hellos'));
     return (
       <View style={{ flex: 1 }}>
         <Text> textInComponent </Text>
+        <Button text="Go back" style={{ color: 'red' }} onPress={() => goBack()} />
         <Form form={form} validate={validate} initialValues={this.state} onSubmit={this.signIn} />
       </View>
     );
