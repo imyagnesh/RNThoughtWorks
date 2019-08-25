@@ -9,17 +9,17 @@ const textbox = ({
   ...props
 }) => {
   return (
-    <View>
+    <>
       <TextInput
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
         value={field.value}
         onChangeText={text => setFieldValue(field.name, text)}
         onBlur={() => setFieldTouched(field.name)}
-        style={{ borderColor: 'gray', borderWidth: StyleSheet.hairlineWidth }}
+        style={{ borderColor: 'gray', borderWidth: StyleSheet.hairlineWidth, height: 40 }}
       />
       <ErrorMessage name={field.name} component={Text} />
-    </View>
+    </>
   );
 };
 

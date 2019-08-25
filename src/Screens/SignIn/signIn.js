@@ -68,7 +68,7 @@ export default class signIn extends Component {
       actions.setSubmitting(false);
       actions.setErrors({ general: 'Oops! something went wrong' });
       const { navigation } = this.props;
-      navigation.navigate('App');
+      navigation.navigate('Dashboard');
     }, 3000);
   };
 
@@ -77,7 +77,7 @@ export default class signIn extends Component {
       navigation: {
         state: { params },
         getParam,
-        goBack,
+        navigate,
       },
     } = this.props;
     console.warn(params);
@@ -85,8 +85,8 @@ export default class signIn extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Text> textInComponent </Text>
-        <Button text="Go back" style={{ color: 'red' }} onPress={() => goBack()} />
-        <Form form={form} validate={validate} initialValues={this.state} onSubmit={this.signIn} />
+        <Button text="Go back" style={{ color: 'red' }} onPress={() => navigate('Dashboard')} />
+        {/* <Form form={form} validate={validate} initialValues={this.state} onSubmit={this.signIn} /> */}
       </View>
     );
   }

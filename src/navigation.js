@@ -1,44 +1,94 @@
+import React from 'react';
 import {
   createStackNavigator,
   createAppContainer,
   createSwitchNavigator,
   createBottomTabNavigator,
+  createDrawerNavigator,
 } from 'react-navigation';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import SignIn from './Screens/SignIn/signIn';
 import SplashScreen from './Screens/SplashScreen/splashScreen';
-import Home from './Screens/Home/home';
+import Home from './Screens/Home/index';
 import Register from './Screens/Register/register';
 import Settings from './Screens/Settings/settings';
+import HomeDetails from './Screens/HomeDetails/index';
 
-const HomeStack = createStackNavigator(
+const HomeStackNavigation = createStackNavigator(
   {
-    HomeScreen: {
+    Home: {
       screen: Home,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerTitle: 'Home',
+          headerLeft: (
+            <Icon
+              style={{ paddingLeft: 10 }}
+              onPress={() => navigation.openDrawer()}
+              name="menu"
+              size={30}
+            />
+          ),
+        };
+      },
     },
+    HomeDetails,
   },
   {},
 );
 
-const Authentication = createStackNavigator({
-  Login: {
-    screen: SignIn,
+const DashboardBottomNavigation = createBottomTabNavigator({
+  Home: {
+    screen: HomeStackNavigation,
   },
-  Register: {
-    screen: Register,
+  Settings: {
+    screen: Settings,
+    navigationOptions: ({ navigation }) => {
+      return {
+        headerTitle: 'Settings',
+        headerLeft: (
+          <Icon
+            style={{ paddingLeft: 10 }}
+            onPress={() => navigation.openDrawer()}
+            name="menu"
+            size={30}
+          />
+        ),
+      };
+    },
   },
 });
 
-const Main = createBottomTabNavigator({
-  Home: HomeStack,
-  Settings: {
-    screen: Settings,
+const DashboardStackNavigation = createStackNavigator(
+  {
+    Main: {
+      screen: DashboardBottomNavigation,
+    },
   },
+  {
+    defaultNavigationOptions: () => {
+      return {
+        header: null,
+      };
+    },
+  },
+);
+
+const DashboardStack = createDrawerNavigator({
+  Dashboard: {
+    screen: DashboardStackNavigation,
+  },
+});
+
+const AuthenticationStack = createStackNavigator({
+  SignIn,
+  Register,
 });
 
 const App = createSwitchNavigator({
-  Splash: SplashScreen,
-  Auth: Authentication,
-  App: Main,
+  // SplashScreen,
+  // Auth: AuthenticationStack,
+  Dashboard: DashboardStack,
 });
 
 export default createAppContainer(App);
