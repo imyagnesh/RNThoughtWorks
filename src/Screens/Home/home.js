@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 import Form from '../../Components/Form/form';
 import Textbox from '../../Components/Textbox/textbox';
 
@@ -22,7 +22,7 @@ const form = [
   },
 ];
 
-const home = ({ onSubmit, todos, loadTodos }) => {
+const home = ({ onSubmit, todos, loadTodos, onComplete }) => {
   useEffect(() => {
     loadTodos();
   }, []);
@@ -30,13 +30,30 @@ const home = ({ onSubmit, todos, loadTodos }) => {
     <View style={{ flex: 1 }}>
       {/* <Text>Home page</Text> */}
       <Form form={form} initialValues={{ todo: '' }} validate={validate} onSubmit={onSubmit} />
-      <View style={{ flex: 1 }}>{todos && todos.map(x => <Text key={x.id}>{x.todo}</Text>)}</View>
+      <View style={{ flex: 1 }}>
+        {todos &&
+          todos.map(x => (
+            <View key={x.id} style={{ flexDirection: 'row' }}>
+              <Text
+                style={{
+                  padding: 10,
+                  flex: 1,
+                  textDecorationLine: x.done ? 'line-through' : 'none',
+                }}
+              >
+                {x.todo}
+              </Text>
+              <Button title="Complete Task" onPress={() => onComplete(x)} />
+            </View>
+          ))}
+      </View>
     </View>
   );
 };
 
 home.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  onComplete: PropTypes.func.isRequired,
   loadTodos: PropTypes.func.isRequired,
   todos: PropTypes.array.isRequired,
 };

@@ -7,23 +7,23 @@
     },
     {
       "todo": "Get Food",
-      "done": false,
-      "id": 2
+      "id": 2,
+      "done": false
     },
     {
       "todo": "Give Training",
-      "done": false,
-      "id": 3
+      "id": 3,
+      "done": false
     },
     {
       "todo": "Give Training",
-      "done": false,
-      "id": 4
+      "id": 4,
+      "done": false
     },
     {
       "todo": "Learn react-native",
-      "done": false,
-      "id": 5
+      "id": 5,
+      "done": false
     }
   ]
 }
