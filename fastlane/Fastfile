@@ -1,0 +1,62 @@
+fastlane_version '2.53.1'
+
+before_all do
+  ensure_git_branch
+  ensure_git_status_clean
+  git_pull
+end
+
+platform :ios do
+  # iOS Lanes
+  desc 'Build the iOS application.'
+  private_lane :build do
+    match(type: "appstore")
+    increment_build_number(xcodeproj: './ios/VSM_React_Native_Components.xcodeproj')
+    cocoapods(podfile: "./ios/Podfile")
+    gym(scheme: 'VSM_React_Native_Components', workspace: './ios/VSM_React_Native_Components.xcworkspace')
+  end
+
+  desc 'Ship to Testflight.'
+  lane :beta do
+    build
+    pilot(
+      skip_submission: true,
+      skip_waiting_for_build_processing: true
+    )
+    commit_version_bump(message: 'Bump build', xcodeproj: './ios/VSM_React_Native_Components.xcodeproj')
+    push_to_git_remote
+  end
+
+  after_all do |lane|
+  slack(
+           message: "Successfully deployed new MyApp alpha update to TestFlight.",
+           success: true,
+           slack_url: "https://hooks.slack.com/services/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"
+       )
+  end
+end
+
+platform :android do
+  before_all do
+    ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
+  end
+
+  # Android Lanes
+  desc 'Build the Android application.'
+  private_lane :build do
+    gradle(task: 'clean', project_dir: 'android/')
+    gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
+  end
+
+  desc 'Ship to Playstore Beta.'
+  lane :beta do
+    build
+    supply(track: 'beta', track_promote_to: 'beta')
+    git_commit(path: ['./android/gradle.properties'], message: 'Bump versionCode')
+    push_to_git_remote
+  end
+
+  after_all do |lane|
+    slack(channel: "deploys", message: "Successfully deployed new MyApp alpha update to the Play Store.")
+  end
+end

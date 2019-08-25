@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, Modal, StyleSheet } from 'react-native';
 import Form from '../../Components/Form/form';
 import Textbox from '../../Components/Textbox/textbox';
 
@@ -27,6 +27,23 @@ const home = ({ onSubmit, todos, loadTodos, onComplete }) => {
     loadTodos();
   }, []);
   return (
+    // <Modal visible transparent animated animationType="slide" onDismiss={() => {}}>
+    //   <View
+    //     style={{
+    //       ...StyleSheet.absoluteFill,
+    //       backgroundColor: 'rgba(0,0,0,0.5)',
+    //       flex: 1,
+    //       justifyContent: 'flex-end',
+    //     }}
+    //   >
+    //     <View style={{ position: 'absolute', top: 30, right: 30 }}>
+    //       <Text>Close</Text>
+    //     </View>
+    //     <View style={{ height: 300, backgroundColor: '#fff' }}>
+    //       <Text>Hello From Text</Text>
+    //     </View>
+    //   </View>
+    // </Modal>
     <View style={{ flex: 1 }}>
       {/* <Text>Home page</Text> */}
       <Form form={form} initialValues={{ todo: '' }} validate={validate} onSubmit={onSubmit} />
